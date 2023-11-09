@@ -8,7 +8,7 @@
 
 ## Overview
 This app provides `3 schemas` of validation to meet your needs for different types of data.
-This `schemas` allow to create flexible method chaining for validating `String, Integer` and `Map` type values.
+This `schemas` allow you to create flexible method chaining for validating `String, Integer` and `Map` type values.
 
 ## How to use
 
@@ -25,8 +25,8 @@ StringSchema string = validator.string();
 MapSchema map = validator.map();
 
 ```
-All schemas define `required()` and `isValid(Object obj)` methods. When `required()` is applied to any of schemas, it will validate
-only values of specific type and won't allow `null`.
+In all schemas defined `required()` and `isValid(Object obj)` methods. When method `required()` is applied depends on a schema,
+it allows to pass only values of type `String, Integer` and `Map` when `isValid(Object obj)` method applied and restricts null values.
 
 ```java
 // NumberSchema
@@ -56,10 +56,16 @@ map.required().isValid(null); // false
 map.required().isValid(hashmap); // true
 
 
-// Note: to actually start validation process required() method should be applied.
+/** Note: to actually start validation process required() method should be applied. 
+ * But to validate a positive number it's not necessary. 
+*/ 
+
+number.positive().isValid(-5); // false
+number.positive().isValid(5); // true
+
 ```
 
-### More examples with specific functionality
+### More examples
 
 ```java
 // validate positive number
@@ -67,19 +73,19 @@ number.required().positive().isValid(-10); // false
 number.required().positive().isValid(0); // false
 number.required().positive().isValid(10); // true
 
-// validate number if it in range
+// validate number if it's in range
 number.required().range(-10, 10).isValid(-10); // true
 
-// validate number if it in range and positive
+// validate number if it's in range and positive
 number.required().positive().range(-10, 10).isValid(-10); // false
 
-// validate string if it meets minimum length requirement 
+// validate string if it's meets minimum length requirement 
 string.required().minLength(7).isValid("hexlet"); // false
 
-// validate string if it contains substring
+// validate string if it's contains substring
 string.required().contains("hex").isValid("hexlet"); // true
 
-// validate map if it has right size
+// validate map if it's has right size
 Map<String, String> validMap = Map.of("key1", "value1", "key2", "value2");
 map.required().sizeof(2).isValid(validMap); // true
 
