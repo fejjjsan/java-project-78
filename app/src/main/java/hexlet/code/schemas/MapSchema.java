@@ -42,6 +42,7 @@ public final class MapSchema extends BaseSchema {
                     return false;
                 }
             }
+            return !sizeRequired || map.size() == mapSize;
         }
         return !isRequired();
     }
