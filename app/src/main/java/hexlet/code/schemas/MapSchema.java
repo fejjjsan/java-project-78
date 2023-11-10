@@ -44,6 +44,6 @@ public final class MapSchema extends BaseSchema {
             }
             return !sizeRequired || map.size() == mapSize;
         }
-        return data == null && !isRequired();
+        return data == null && !isRequired() && !sizeRequired && !shapeRequired;
     }
 }
