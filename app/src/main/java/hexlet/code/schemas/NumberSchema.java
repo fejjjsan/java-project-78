@@ -9,6 +9,7 @@ import lombok.ToString;
 public final class NumberSchema extends BaseSchema {
 
     private boolean positiveRequired;
+    private boolean rangeRequired;
     private int min;
     private int max;
 
@@ -23,6 +24,7 @@ public final class NumberSchema extends BaseSchema {
     public NumberSchema range(final int min, final int max) {
         this.min = min;
         this.max = max;
+        this.rangeRequired = true;
         return this;
     }
 
@@ -30,8 +32,8 @@ public final class NumberSchema extends BaseSchema {
     public boolean isValid(final Object data) {
         if (data instanceof Integer number) {
             boolean positive = number > 0 && positiveRequired;
-            boolean inRange = (number >= min && number <= max);
-            return positive && inRange || positive && min == 0 && max == 0 || inRange && !positiveRequired;
+            boolean inRange = (number >= min && number <= max) && rangeRequired;
+            return positive && inRange || !rangeRequired && positive;
         }
         return !isRequired();
     }
