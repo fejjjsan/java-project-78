@@ -43,61 +43,61 @@ public final class AppTest {
      */
     @ParameterizedTest
     @CsvSource({"''", "hexlet"})
-    void String_of_any_length_is_valid(String str) {
+    void stringOfAnyLengthIsValid(String str) {
         assertTrue(s.isValid(str));
     }
 
     @ParameterizedTest
     @CsvSource({"5", ","})
-    void Null_or_number_is_valid(Object obj) {
+    void nullOrNumberIsValid(Object obj) {
         assertTrue(s.isValid(obj));
     }
 
     @ParameterizedTest
     @EmptySource
-    void Empty_string_is_invalid(String emptyStr) {
+    void emptyStringIsInvalid(String emptyStr) {
         assertFalse(s.required().isValid(emptyStr));
     }
 
     @ParameterizedTest
     @CsvSource({"5, "})
-    void Null_or_number_is_invalid(int num, String nullStr) {
+    void nullOrNumberIsInvalid(int num, String nullStr) {
         assertFalse(s.required().isValid(num));
         assertFalse(s.required().isValid(nullStr));
     }
 
     @ParameterizedTest
     @CsvSource({"hexlet"})
-    void String_with_length_greater_then_zero_is_valid(String str) {
+    void stringWithLengthGreaterThenZeroIsValid(String str) {
         assertTrue(s.required().isValid(str));
     }
 
     @ParameterizedTest
     @CsvSource({"7, hexlet"})
-    void String_that_does_not_meet_minimal_length_is_invalid(int out, String str) {
+    void stringThatDoesNotMeetMinimalLengthIsInvalid(int out, String str) {
         assertFalse(s.required().minLength(out).isValid(str));
     }
 
     @ParameterizedTest
     @CsvSource({"5, hexlet"})
-    void String_that_meets_minimal_length_is_valid(int in, String str) {
+    void stringThatMeetsMinimalLengthIsValid(int in, String str) {
         assertTrue(s.required().minLength(in).isValid(str));
     }
 
     @ParameterizedTest
     @CsvSource({"hex, hexlet"})
-    void String_that_contains_substring_is_valid(String sub, String str) {
+    void stringThatContainsSubstringIsValid(String sub, String str) {
         assertTrue(s.required().contains(sub).isValid(str));
     }
 
     @ParameterizedTest
     @CsvSource({"hed, hexlet"})
-    void String_that_does_not_contain_substring_is_invalid(String sub, String str) {
+    void stringThatDoesNotContainSubstringIsInvalid(String sub, String str) {
         assertFalse(s.required().contains(sub).isValid(str));
     }
 
     @Test
-    void String_that_does_not_contain_substring_or_meet_minimal_length_is_invalid() {
+    void stringThatDoesNotContainSubstringOrMeetMinimalLengthIsInvalid() {
         var rightSub = "hex";
         var wrongSub = "hed";
         var str = "hexlet";
@@ -109,7 +109,7 @@ public final class AppTest {
     }
 
     @Test
-    void String_that_contains_substring_and_meets_minimal_length_is_valid() {
+    void stringThatContainsSubstringAndMeetsMinimalLengthIsValid() {
         var rightSub = "hex";
         var str = "hexlet";
         var in = 6;
@@ -122,13 +122,19 @@ public final class AppTest {
      */
     @ParameterizedTest
     @NullSource
-    void Null_treated_as_a_number_is_valid(String nullStr) {
+    void nullTreatedAsANumberIsValid(String nullStr) {
         assertTrue(n.isValid(nullStr));
     }
 
     @ParameterizedTest
+    @CsvSource({"10"})
+    void numberIsValid(int number) {
+        assertTrue(n.isValid(number));
+    }
+
+    @ParameterizedTest
     @NullSource
-    void Null_treated_as_a_positive_number_is_valid(String nullStr) {
+    void nullTreatedAsAPositiveNumberIsValid(String nullStr) {
         assertTrue(n.positive().isValid(nullStr));
     }
 
@@ -136,14 +142,14 @@ public final class AppTest {
     @CsvSource(delimiter = '|', textBlock = """
              | "5" | 10
             """)
-    void Null_or_String_values_are_invalid(String nullStr, String str) {
+    void nullOrStringValuesAreInvalid(String nullStr, String str) {
         assertFalse(n.required().positive().isValid(nullStr));
         assertFalse(n.required().positive().isValid(str));
     }
 
     @ParameterizedTest
     @CsvSource({"10"})
-    void Positive_number_is_valid(int number) {
+    void positiveNumberIsValid(int number) {
         assertTrue(n.required().positive().isValid(number));
     }
 
@@ -151,7 +157,7 @@ public final class AppTest {
     @CsvSource(delimiter = '|', textBlock = """
             -10 | 0
             """)
-    void Negative_number_or_zero_are_invalid(int negative, int zero) {
+    void negativeNumberOrZeroAreInvalid(int negative, int zero) {
         assertFalse(n.required().positive().isValid(negative));
         assertFalse(n.required().positive().isValid(zero));
     }
@@ -161,7 +167,7 @@ public final class AppTest {
             5 | 10 | 4
             5 | 10 | 11
             """)
-    void Positive_number_that_do_not_fall_under_the_range_is_invalid(int min, int max, int number) {
+    void positiveNumberThatDoNotFallUnderTheRangeIsInvalid(int min, int max, int number) {
         assertFalse(n.required().positive().range(min, max).isValid(number));
     }
 
@@ -170,7 +176,7 @@ public final class AppTest {
             5 | 10 | 5
             5 | 10 | 10
             """)
-    void Positive_number_that_fall_under_the_range_is_valid(int min, int max, int number) {
+    void positiveNumberThatFallUnderTheRangeIsValid(int min, int max, int number) {
         assertTrue(n.required().positive().range(min, max).isValid(number));
     }
 
@@ -181,7 +187,7 @@ public final class AppTest {
      */
     @ParameterizedTest
     @NullSource
-    void Null_treated_as_a_Map_is_valid(Object nullValue) {
+    void nullTreatedAsAMapIsValid(Object nullValue) {
         assertTrue(m.isValid(nullValue));
     }
 
@@ -189,25 +195,25 @@ public final class AppTest {
     @CsvSource(delimiter = '|', textBlock = """
             '' | 10 | hexlet
             """)
-    void Any_input_except_Map_are_invalid(Object obj) {
+    void anyInputExceptMapAreInvalid(Object obj) {
         assertFalse(m.required().isValid(obj));
     }
 
     @Test
-    void Empty_map_is_valid() {
+    void emptyMapIsValid() {
         Map<Object, Object> emptyMap = new HashMap<>();
         assertTrue(m.required().isValid(emptyMap));
     }
 
     @Test
-    void Map_that_has_right_size_is_valid() {
+    void mapThatHasRightSizeIsValid() {
         Map<Object, Object> mapOfRightSize = Map.of("key1", "value1", "key2", "value2");
         var size = 2;
         assertTrue(m.required().sizeof(size).isValid(mapOfRightSize));
     }
 
     @Test
-    void Map_that_has_wrong_size_is_invalid() {
+    void mapThatHasWrongSizeIsInvalid() {
         Map<Object, Object> mapOfWrongSize = Map.of("key1", "value1");
         var size = 2;
         assertFalse(m.required().sizeof(size).isValid(mapOfWrongSize));
@@ -215,13 +221,13 @@ public final class AppTest {
 
     @ParameterizedTest
     @MethodSource("invalidMapProvider")
-    void Map_that_has_invalid_values_is_invalid(Map<String, Object> invalidMap) {
+    void mapThatHasInvalidValuesIsInvalid(Map<String, Object> invalidMap) {
         assertFalse(m.shape(schemas).isValid(invalidMap));
     }
 
     @ParameterizedTest
     @MethodSource("validMapProvider")
-    void Map_that_has_valid_values_is_valid(Map<String, Object> validMap) {
+    void mapThatHasValidValuesIsValid(Map<String, Object> validMap) {
         assertTrue(m.shape(schemas).isValid(validMap));
     }
 

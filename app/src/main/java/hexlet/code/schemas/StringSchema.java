@@ -15,8 +15,8 @@ public final class StringSchema extends BaseSchema {
         return this;
     }
 
-    public StringSchema minLength(final int length) {
-        this.length = length;
+    public StringSchema minLength(final int num) {
+        this.length = num;
         return this;
     }
 

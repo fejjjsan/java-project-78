@@ -21,9 +21,9 @@ public final class NumberSchema extends BaseSchema {
         this.positiveRequired = true;
         return this;
     }
-    public NumberSchema range(final int min, final int max) {
-        this.min = min;
-        this.max = max;
+    public NumberSchema range(final int minNum, final int maxNum) {
+        this.min = minNum;
+        this.max = maxNum;
         this.rangeRequired = true;
         return this;
     }
