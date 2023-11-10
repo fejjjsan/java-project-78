@@ -31,7 +31,7 @@ public final class NumberSchema extends BaseSchema {
         if (data instanceof Integer number) {
             boolean positive = number > 0 && positiveRequired;
             boolean inRange = (number >= min && number <= max);
-            return positive && inRange || positive && min == 0 && max == 0;
+            return positive && inRange || positive && min == 0 && max == 0 || inRange && !positiveRequired;
         }
         return !isRequired();
     }
