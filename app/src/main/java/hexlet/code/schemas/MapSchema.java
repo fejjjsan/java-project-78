@@ -12,7 +12,7 @@ public final class MapSchema extends BaseSchema {
     private boolean shapeRequired;
     private boolean sizeRequired;
     private int mapSize;
-    private Map<String, BaseSchema> shape;
+    private Map<?, BaseSchema> shape;
 
     public MapSchema required() {
         this.setRequired(true);
@@ -25,7 +25,7 @@ public final class MapSchema extends BaseSchema {
         return this;
     }
 
-    public MapSchema shape(final Map<String, BaseSchema> map) {
+    public MapSchema shape(final Map<?, BaseSchema> map) {
         this.shape = map;
         this.shapeRequired = true;
         return this;
