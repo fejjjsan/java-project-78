@@ -20,8 +20,8 @@ public final class StringSchema extends BaseSchema {
         return this;
     }
 
-    public StringSchema contains(final String subString) {
-        this.subString = subString;
+    public StringSchema contains(final String subStr) {
+        this.subString = subStr;
         return this;
     }
 
