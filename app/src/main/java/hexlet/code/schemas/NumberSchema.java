@@ -35,6 +35,6 @@ public final class NumberSchema extends BaseSchema {
             boolean inRange = (number >= min && number <= max) && rangeRequired;
             return positive && inRange || !rangeRequired && positive;
         }
-        return !isRequired();
+        return data == null && !isRequired();
     }
 }
