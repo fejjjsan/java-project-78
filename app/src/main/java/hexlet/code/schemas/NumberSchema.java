@@ -31,9 +31,10 @@ public final class NumberSchema extends BaseSchema {
     @Override
     public boolean isValid(final Object data) {
         if (data instanceof Integer number) {
+            boolean noRequirements = !positiveRequired && !rangeRequired && !isRequired();
             boolean positive = number > 0 && positiveRequired;
             boolean inRange = (number >= min && number <= max) && rangeRequired;
-            return positive && inRange || !rangeRequired && positive;
+            return positive && inRange || !rangeRequired && positive || noRequirements;
         }
         return data == null && !isRequired();
     }
