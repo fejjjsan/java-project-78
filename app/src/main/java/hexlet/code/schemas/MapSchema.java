@@ -35,7 +35,7 @@ public final class MapSchema extends BaseSchema {
     public boolean isValid(final Object data) {
         if (data instanceof Map map && !shapeRequired) {
             boolean hasRightSize = mapSize == map.size();
-            return hasRightSize && sizeRequired || isRequired() && !sizeRequired;
+            return hasRightSize && sizeRequired || isRequired() && !sizeRequired || !sizeRequired && !isRequired();
         } else if (data instanceof Map map && shape != null) {
             for (Object key : map.keySet()) {
                 if (!shape.get(key).isValid(map.get(key))) {
