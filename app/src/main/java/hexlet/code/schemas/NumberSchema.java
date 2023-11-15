@@ -8,7 +8,7 @@ import lombok.ToString;
 public final class NumberSchema extends BaseSchema {
 
     public NumberSchema required() {
-        this.getRequirements().add((num) -> !(num instanceof String));
+        this.getRequirements().add((num) -> num instanceof Integer);
         this.setRequired(true);
         return this;
     }
