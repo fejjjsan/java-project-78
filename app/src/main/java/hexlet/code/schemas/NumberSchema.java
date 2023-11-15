@@ -13,7 +13,7 @@ public final class NumberSchema extends BaseSchema {
         return this;
     }
     public NumberSchema positive() {
-        this.getRequirements().add((num) -> (Integer) num > 0);
+        this.getRequirements().add((num) -> num instanceof Integer && (Integer) num > 0);
         return this;
     }
     public NumberSchema range(final int min, final int max) {
