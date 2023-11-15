@@ -4,11 +4,27 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@ToString
-@Setter
+import java.util.ArrayList;
+import java.util.function.Predicate;
+
 @Getter
-public abstract class BaseSchema {
+@Setter
+@ToString
+public class BaseSchema {
 
     private boolean isRequired;
-    abstract boolean isValid(Object data);
+    private final ArrayList<Predicate<Object>> requirements = new ArrayList<>();
+
+
+    public final boolean isValid(Object data) {
+        if (data != null) {
+            for (Predicate<Object> p : requirements) {
+                if (!p.test(data)) {
+                    return false;
+                }
+            }
+            return true;
+        }
+        return !isRequired;
+    };
 }
