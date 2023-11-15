@@ -10,7 +10,7 @@ import lombok.ToString;
 public final class StringSchema extends BaseSchema {
 
     public StringSchema required() {
-        this.getRequirements().add((str) -> !str.equals("") && str instanceof String);
+        this.getRequirements().add((str) -> str instanceof String && !str.equals(""));
         this.setRequired(true);
         return this;
     }
