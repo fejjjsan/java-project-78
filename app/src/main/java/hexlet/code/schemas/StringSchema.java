@@ -8,7 +8,6 @@ import lombok.ToString;
 @ToString
 @Getter
 public final class StringSchema extends BaseSchema {
-
     public StringSchema required() {
         this.getRequirements().add((str) -> str instanceof String && !str.equals(""));
         this.setRequired(true);

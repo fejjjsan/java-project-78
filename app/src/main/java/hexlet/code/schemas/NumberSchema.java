@@ -3,10 +3,10 @@ package hexlet.code.schemas;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+
 @NoArgsConstructor
 @ToString
 public final class NumberSchema extends BaseSchema {
-
     public NumberSchema required() {
         this.getRequirements().add((num) -> num instanceof Integer);
         this.setRequired(true);

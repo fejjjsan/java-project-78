@@ -3,13 +3,14 @@ package hexlet.code.schemas;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @NoArgsConstructor
 @ToString
 public final class MapSchema extends BaseSchema {
 
-    private Map<?, BaseSchema> shape;
+    private Map<?, BaseSchema> schemas = new HashMap<>();
 
     public MapSchema required() {
         this.getRequirements().add((map) -> map instanceof Map<?, ?>);
@@ -22,15 +23,10 @@ public final class MapSchema extends BaseSchema {
         return this;
     }
     public MapSchema shape(final Map<?, BaseSchema> shapeMap) {
-        this.shape = shapeMap;
+        this.schemas = shapeMap;
         this.getRequirements().add((data) -> {
             var map = (Map<?, ?>) data;
-            for (Object key : map.keySet()) {
-                if (!shape.get(key).isValid(map.get(key))) {
-                    return false;
-                }
-            }
-            return true;
+            return map.keySet().stream().allMatch(k -> schemas.get(k).isValid(map.get(k)));
         });
         return this;
     }
