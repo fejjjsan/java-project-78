@@ -12,10 +12,12 @@ public final class NumberSchema extends BaseSchema {
         this.setRequired(true);
         return this;
     }
+
     public NumberSchema positive() {
         this.getRequirements().add((num) -> num instanceof Integer && (Integer) num > 0);
         return this;
     }
+
     public NumberSchema range(final int min, final int max) {
         this.getRequirements().add((num) -> ((Integer) num) >= min && ((Integer) num) <= max);
         return this;

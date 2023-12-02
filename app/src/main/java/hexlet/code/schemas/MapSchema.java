@@ -22,6 +22,7 @@ public final class MapSchema extends BaseSchema {
         this.getRequirements().add((map) -> ((Map<?, ?>) map).size() == size);
         return this;
     }
+
     public MapSchema shape(final Map<?, BaseSchema> shapeMap) {
         this.schemas = shapeMap;
         this.getRequirements().add((data) -> {
