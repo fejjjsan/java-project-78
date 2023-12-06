@@ -4,7 +4,8 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.function.Predicate;
 
 @Getter
@@ -13,15 +14,14 @@ import java.util.function.Predicate;
 public class BaseSchema {
 
     private boolean isRequired;
-    private final ArrayList<Predicate<Object>> requirements = new ArrayList<>();
-
-    public final boolean isValid(final Object data) throws ClassCastException, NullPointerException {
-        boolean result = false;
-        try {
-            result = requirements.stream().allMatch(p -> p.test(data));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return data != null ? result : !isRequired;
+    private final Map<String, Predicate<Object>> requirements = new HashMap<>();
+    public final boolean isValid(final Object data) {
+            if (!isRequired && requirements.get("checkType").test(data)) {
+                return true;
+            } else {
+                return requirements.keySet().stream()
+                        .filter(k -> !k.equals("checkType"))
+                        .allMatch(k -> requirements.get(k).test(data));
+            }
     }
 }
