@@ -25,26 +25,31 @@ StringSchema string = validator.string();
 MapSchema map = validator.map();
 
 ```
-In all schemas defined `required()` and `isValid(Object obj)` methods. When method `required()` is applied depends on a schema,
-it allows to pass only values of type `String, Integer` and `Map` when `isValid(Object obj)` method applied and restricts null values.
+`required()` method defined in all schemas. When `required()` is applied, `isValid(Object obj)` method will return `false`
+everytime the type of argument is different from `String, Integer` or `Map` depends on a schema you use. For example 
+`StringSchema` will wait for an argument only with type `String` (empty string is not allowed too).
 
 ```java
 // NumberSchema
 number.isValid(null); // true
 number.isValid("5"); // true
 number.isValid(5); // true
+        
+number.required();
 
-number.required().isValid(null); // false
-number.required().isValid(5); // true
+number.isValid(null); // false
+number.isValid(5); // true
 
 // StringSchema
 string.isValid(null); // true
 string.isValid(""); // true
 string.isValid("hexlet"); // true
+
+string.required();
         
-string.required().isValid(null); // false
-string.required().isValid(""); // false
-string.required().isValid("hexlet"); // true
+string.isValid(null); // false
+string.isValid(""); // false
+string.isValid("hexlet"); // true
 
 // MapSchema
 Map<Object, Object> hashmap = new HashMap<>();
@@ -52,44 +57,34 @@ Map<Object, Object> hashmap = new HashMap<>();
 map.isValid(null); // true
 map.isValid(hashmap); // true
 
-map.required().isValid(null); // false
-map.required().isValid(hashmap); // true
-
-
-/** Note: to actually start validation process required() method should be applied. 
- * But to validate a positive number it's not necessary. 
-*/ 
-
-number.positive().isValid(-5); // false
-number.positive().isValid(5); // true
-
+map.required();
+        
+map.isValid(null); // false
+map.isValid(hashmap); // true
 ```
 
 ### More examples
 
 ```java
 // validate positive number
-number.required().positive().isValid(-10); // false
-number.required().positive().isValid(0); // false
-number.required().positive().isValid(10); // true
-
-// validate number if it's in range
-number.required().range(-10, 10).isValid(-10); // true
+number.required().positive();
+number.isValid(-10); // false
+number.isValid(0); // false
+number.isValid(10); // true
 
 // validate number if it's in range and positive
-number.required().positive().range(-10, 10).isValid(-10); // false
+number.range(5, 10)
+number.isValid(10); // true
 
 // validate string if it's meets minimum length requirement 
-string.required().minLength(7).isValid("hexlet"); // false
+string.minLength(6).isValid("hexlet"); // true
 
 // validate string if it's contains substring
-string.required().contains("hex").isValid("hexlet"); // true
+string.contains("hex").isValid("hexlet"); // true
 
 // validate map if it's has right size
 Map<String, String> validMap = Map.of("key1", "value1", "key2", "value2");
-map.required().sizeof(2).isValid(validMap); // true
-
-
+map.sizeof(2).isValid(validMap); // true
 ```
 `MapSchema` defines `shape(Map<Object, BaseSchema> map)` method which allows to validate values inside a map.
 It also provides tailored schemas for values against which it will process validation. 
