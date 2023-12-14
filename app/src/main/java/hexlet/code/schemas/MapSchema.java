@@ -1,22 +1,19 @@
 package hexlet.code.schemas;
 
-import lombok.ToString;
 import java.util.Map;
 
-@ToString
 public final class MapSchema extends BaseSchema {
     public MapSchema() {
-        this.getRequirements().put("checkType", (data) -> !(data instanceof Map<?, ?>));
+        this.getRequirements().put("required", (data) -> data instanceof Map<?, ?>);
     }
 
     public MapSchema required() {
-        this.getRequirements().put("required", (map) -> map instanceof Map<?, ?>);
         this.setRequired(true);
         return this;
     }
 
     public MapSchema sizeof(int size) {
-        this.getRequirements().put("sizeof", (map) -> map instanceof Map<?, ?> && ((Map<?, ?>) map).size() == size);
+        this.getRequirements().put("sizeof", (map) -> ((Map<?, ?>) map).size() == size);
         return this;
     }
 

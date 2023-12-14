@@ -3,44 +3,17 @@ package hexlet.code;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import hexlet.code.schemas.BaseSchema;
 import hexlet.code.schemas.MapSchema;
 import hexlet.code.schemas.NumberSchema;
 import hexlet.code.schemas.StringSchema;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import hexlet.code.schemas.BaseSchema;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public final class AppTest {
     private static final Validator VALIDATOR = new Validator();
-    private static Map<String, BaseSchema> schemas;
-    private static Map<String, Object> human1;
-    private static Map<String, Object> human2;
-    private static Map<String, Object> human3;
-    private static Map<String, Object> human4;
-    private static Map<Object, Object> map;
-
-
-    @BeforeAll
-    static void createSchemasMap() {
-        schemas = Map.of("name", VALIDATOR.string().required(), "age", VALIDATOR.number().positive());
-        map = Map.of("key1", "value1", "key2", "value2");
-
-        human1 = Map.of("name", "Kolya", "age", 100);
-
-        human2 = new HashMap<>();
-        human2.put("name", "Maya");
-        human2.put("age", null);
-
-        human3 = new HashMap<>();
-        human3.put("name", "");
-        human3.put("age", null);
-
-        human4 = Map.of("name", "Valya", "age", -5);
-    }
 
     @Test
     void testStringSchema() {
@@ -90,6 +63,22 @@ public final class AppTest {
     @Test
     void testMapSchema() {
         MapSchema schema = VALIDATOR.map();
+        Map<String, BaseSchema> schemas = Map.of(
+                "name", VALIDATOR.string().required(),
+                "age", VALIDATOR.number().positive()
+        );
+        Map<String, Object> human1 = Map.of("name", "Kolya", "age", 100);
+
+        Map<String, Object> human2 = new HashMap<>();
+        human2.put("name", "Maya");
+        human2.put("age", null);
+
+        Map<String, Object> human3 = new HashMap<>();
+        human3.put("name", "");
+        human3.put("age", null);
+
+        Map<String, Object> human4 = Map.of("name", "Valya", "age", -5);
+        Map<Object, Object> map = Map.of("key1", "value1", "key2", "value2");
 
         assertTrue(schema.isValid(null));
 
