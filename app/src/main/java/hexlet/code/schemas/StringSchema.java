@@ -2,7 +2,7 @@ package hexlet.code.schemas;
 
 public final class StringSchema extends BaseSchema {
     public StringSchema() {
-        this.getRequirements().put("required", (data) -> data instanceof String && !data.equals(""));
+        addRequirenment("required", (data) -> data instanceof String && !data.equals(""));
     }
 
     public StringSchema required() {

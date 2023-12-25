@@ -4,7 +4,7 @@ import java.util.Map;
 
 public final class MapSchema extends BaseSchema {
     public MapSchema() {
-        this.getRequirements().put("required", (data) -> data instanceof Map<?, ?>);
+        addRequirenment("required", (data) -> data instanceof Map<?, ?>);
     }
 
     public MapSchema required() {

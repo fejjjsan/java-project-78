@@ -14,15 +14,17 @@ public class BaseSchema {
         return requirements;
     }
 
+    public final void addRequirenment(String disc, Predicate<Object> p) {
+        this.getRequirements().put(disc, p);
+    }
+
     public final boolean isValid(final Object data) {
-        boolean result = false;
-        boolean dataIsValid = requirements.get("required").test(data);
-        if (!isRequired && !dataIsValid) {
-            result = true;
-        } else if (dataIsValid) {
-            result = requirements.keySet().stream()
+        if (!isRequired && !requirements.get("required").test(data)) {
+            return true;
+        } else if (requirements.get("required").test(data)) {
+            return requirements.keySet().stream()
                     .allMatch(k -> requirements.get(k).test(data));
         }
-        return result;
+        return false;
     }
 }

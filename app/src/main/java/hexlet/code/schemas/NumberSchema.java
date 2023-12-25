@@ -2,7 +2,7 @@ package hexlet.code.schemas;
 
 public final class NumberSchema extends BaseSchema {
     public NumberSchema() {
-        this.getRequirements().put("required", (data) -> data instanceof Number);
+        addRequirenment("required", (data) -> data instanceof Number);
     }
 
     public NumberSchema required() {
